@@ -36,10 +36,13 @@
         this.loading = true;
 
         let data = {
-          name: this.name,
+          'name': this.name,
+          'response': "sadsad"
         };
 
-        axios.post('http://localhost:8000/save', data).then((res) => {
+        axios.post('http://localhost:8000/save', data, {
+          headers: { "Content-Type": "application/json" }
+        }).then((res) => {
           this.loading = false;
           console.log(res)
         }).catch((err) => {
