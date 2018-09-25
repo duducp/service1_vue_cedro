@@ -36,8 +36,7 @@
         this.loading = true;
 
         let data = {
-          'name': this.name,
-          'response': "sadsad"
+          'name': this.name
         };
 
         axios.post('http://localhost:8000/save', data, {
