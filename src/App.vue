@@ -9,6 +9,7 @@
     </v-toolbar>
 
     <router-view/>
+    <vue-snotify></vue-snotify>
   </div>
 </template>
 

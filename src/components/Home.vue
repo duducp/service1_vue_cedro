@@ -43,20 +43,16 @@
           headers: { "Content-Type": "application/json" }
         }).then((res) => {
           this.loading = false;
-          console.log(res)
+          this.displayNotification('Você está na fila, já já iremos te dar retorno!', 'Aguarde...', 'info');
         }).catch((err) => {
           this.loading = false;
-
-          let errors = err.response.data.errors;
-
-          if (errors) {
-            for (let field in errors) {
-              this.messages[field] = errors[field]
-            }
-          }
-
+          // let errors = err.response.data.errors;
+          this.displayNotification('Oops.. algo deu errado. Tente novamente!', '', 'error');
         })
 
+      },
+      displayNotification(message, title, type = 'success') {
+        this.$snotify[type](message, title, {timeout: 5000});
       }
     }
   }
