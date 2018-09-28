@@ -2,14 +2,15 @@
   <v-layout row>
     <v-flex>
       <v-card class="form-app">
-        <v-form ref="form">
+        <v-form ref="form" v-model="valid">
           <v-text-field
             label="Informe o nome completo"
             v-model="name"
+            :rules="nameRules"
             required
           ></v-text-field>
           
-          <v-btn @click="submit" :loading="loading" :disabled="loading" >
+          <v-btn class="btnPesquisa" @click="submit" :loading="loading" :disabled="loading" >
             Pesquisar
           </v-btn>
         </v-form>
@@ -52,8 +53,12 @@
 
   export default {
     data: () => ({
+      valid: false,
       loading: false,
       name: '',
+      nameRules: [
+        (v) => !!v || 'O nome é obrigatório'
+      ],
       messages: {
         name: [],
       },
@@ -84,35 +89,36 @@
     }),
     methods: {
       submit() {
-        this.loading = true;
+        if (this.$refs.form.validate()) {
+          this.loading = true;
 
-        let data = {
-          'name': this.name
-        };
+          let data = {
+            'name': this.name
+          };
 
-        axios.post('http://localhost:8000/save', data, {
-          headers: { "Content-Type": "application/json" }
-        }).then((res) => {
-          this.loading = false;
-          this.displayNotification('Você está na fila, já já iremos te dar retorno!', 'Aguarde...', 'info');
+          axios.post('http://localhost:8000/save', data, {
+            headers: { "Content-Type": "application/json" }
+          }).then((res) => {
+            this.loading = false;
+            this.displayNotification('Você está na fila, já já iremos te dar retorno!', 'Aguarde...', 'info');
 
-          this.dataResponse.push({
-            id: res.data.data['id'],
-            name: res.data.data['name']
+            this.dataResponse.push({
+              id: res.data.data['id'],
+              name: res.data.data['name']
+            })
+
+            setTimeout(() => {
+              this.searchProcess(res.data.data['id'])
+            }, 3000);
+
+            // this.$socket.send('some data')
+            // this.$options.sockets.onmessage = (data) => console.log(data)
+          }).catch((err) => {
+            this.loading = false;
+            // let errors = err.response.data.errors;
+            this.displayNotification('Oops.. algo deu errado. Tente novamente!', '', 'error');
           })
-
-          setTimeout(() => {
-            this.searchProcess(res.data.data['id'])
-          }, 3000);
-
-          // this.$socket.send('some data')
-          // this.$options.sockets.onmessage = (data) => console.log(data)
-        }).catch((err) => {
-          this.loading = false;
-          // let errors = err.response.data.errors;
-          this.displayNotification('Oops.. algo deu errado. Tente novamente!', '', 'error');
-        })
-
+        }
       },
       searchProcess(id) {
         axios.get('http://localhost:8000/busca/' + id).then((res) => {
@@ -154,7 +160,7 @@
     padding: 10px;
   }
 
-  .v-btn {
+  .btnPesquisa.v-btn {
     background-color: #212121 !important;
     color: #fff;
   }
