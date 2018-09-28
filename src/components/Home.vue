@@ -28,14 +28,16 @@
           <td>{{ props.item.name }}</td>
           <td>{{ props.item.process }}</td>
           <td>
-            <span v-if="props.item.link_access_process">
-              <v-btn
-                flat
-                small
-                href="{ props.item.link_access_process }"
-                target="_blank"
-              >Ver Processo</v-btn>
-            </span>
+            <v-btn
+              v-if="props.item.link_access_process"
+              flat
+              icon
+              color="black"
+              :href="props.item.link_access_process"
+              target="_blank"
+            >
+              <v-icon>open_in_new</v-icon>
+            </v-btn>
           </td>
         </template>
 
@@ -81,8 +83,8 @@
           sortable: false
         },
         {
-          text: '',
-          value: 'view'
+          text: 'Ações',
+          value: 'actions'
         }
       ],
       dataResponse: []
@@ -129,16 +131,17 @@
           if (index !== -1) {
             this.dataResponse.splice(index, 1);
 
+            let link
+            if (res.data.data['response']['link'] !== 'Nada Encontrado')
+              link = res.data.data['response']['dominio'] + res.data.data['response']['link']
+
             this.dataResponse.push({
               id: res.data.data['id'],
               name: res.data.data['name'],
-              link_access_process: res.data.data['response']['dominio'] + res.data.data['response']['link'],
+              link_access_process: link,
               process: res.data.data['response']['numero_processo']
             })
           }
-
-          console.log(res['data']['data'])
-          console.log(this.dataResponse)
 
           // this.$socket.send('some data')
           // this.$options.sockets.onmessage = (data) => console.log(data)

@@ -9,15 +9,13 @@ import router from './router'
 
 import 'vuetify/dist/vuetify.min.css'
 import "vue-snotify/styles/material.css";
+import '@mdi/font/css/materialdesignicons.css'
 
 Vue.use(VueNativeSock, 'ws://localhost:8000/ws', {
   reconnection: true,
   reconnectionAttempts: 10,
   reconnectionDelay: 3000,
 })
-
-Vue.use(Snotify)
-Vue.config.productionTip = false
 
 const options = {
   toast: {
@@ -27,7 +25,12 @@ const options = {
     pauseOnHover: true
   }
 }
-Vue.use(Vuetify, options)
+Vue.use(Snotify, options)
+
+Vue.config.productionTip = false
+Vue.use(Vuetify, {
+  iconfont: 'mdi' // 'md' || 'mdi' || 'fa' || 'fa4'
+})
 
 /* eslint-disable no-new */
 new Vue({
