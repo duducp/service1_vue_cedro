@@ -93,6 +93,9 @@
       ],
       dataResponse: []
     }),
+    mounted() {
+      if (localStorage.getItem('data')) this.dataResponse = JSON.parse(localStorage.getItem('data'));
+    },
     methods: {
       submit() {
         if (this.$refs.form.validate()) {
@@ -112,6 +115,8 @@
               id: res.data.data['id'],
               name: res.data.data['name']
             })
+
+            localStorage.setItem('data', JSON.stringify(this.dataResponse));
 
             setTimeout(() => {
               this.searchProcess(res.data.data['id'])
@@ -145,6 +150,8 @@
               link_access_process: link,
               process: res.data.data['response']['numero_processo']
             })
+
+            localStorage.setItem('data', JSON.stringify(this.dataResponse));
           }
 
           // this.$socket.send('some data')
@@ -160,6 +167,8 @@
         if (index !== -1) {
           this.dataResponse.splice(index, 1);
         }
+
+        localStorage.setItem('data', JSON.stringify(this.dataResponse));
       },
       displayNotification(message, title, type = 'success') {
         this.$snotify[type](message, title, {timeout: 3000});
