@@ -1,21 +1,20 @@
-# vue-cedro
+# Primeiro Serviço
 
-> A Vue.js project
+#### Descrição
+Esse serviço é reponsavel por:
+- enviar para o segundo serviço via POST, o nome da pessoa que o usuário digitar
+- receber a resposta da pesquisa e mostrar para o usuário os dados do processo
+- os dados pesquisados ficam salvos no localstorage
 
-## Build Setup
+### Imagem
+
+
+## Como utilizar
 
 ``` bash
-# install dependencies
+# Instalar dependências
 npm install
 
-# serve with hot reload at localhost:8080
+# Executar e testar na url: localhost:8080
 npm run dev
-
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
 ```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
