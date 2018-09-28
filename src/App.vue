@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <v-toolbar color="primary" dark>
-      <v-toolbar-title>Teste Cedro</v-toolbar-title>
+      <v-toolbar-title>Consulta Processos (TJSP)</v-toolbar-title>
       <v-spacer></v-spacer>
       <!--<v-btn icon>
         <v-icon>search</v-icon>
