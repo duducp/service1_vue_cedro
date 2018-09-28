@@ -38,6 +38,10 @@
             >
               <v-icon>open_in_new</v-icon>
             </v-btn>
+
+            <v-btn flat icon color="red" @click="excluir(props.item.id)">
+              <v-icon>delete</v-icon>
+            </v-btn>
           </td>
         </template>
 
@@ -149,6 +153,13 @@
           this.loading = false;
           this.displayNotification('Oops.. algo deu errado ao buscar o processo!', '', 'error');
         })
+      },
+      excluir(id) {
+        const index = _.findIndex(this.dataResponse, {id: id})
+
+        if (index !== -1) {
+          this.dataResponse.splice(index, 1);
+        }
       },
       displayNotification(message, title, type = 'success') {
         this.$snotify[type](message, title, {timeout: 3000});
